@@ -373,14 +373,10 @@ class AddSingleDownloadComponent(
                     // and I don't want this coroutine to be halted infinitely
                     withTimeout(10_000) {
                         canAddToDownloads.first { it }
-                        if (silentImport.silentDownload) {
-                            onRequestDownload()
-                        } else {
-                            onRequestAddToQueue(
-                                DefaultQueueInfo.ID,
-                                false,
-                            )
-                        }
+                        onRequestAddToQueue(
+                            queueId = DefaultQueueInfo.ID,
+                            startQueue = silentImport.silentDownload,
+                        )
                     }
                     false
                 } catch (_: Exception) {
